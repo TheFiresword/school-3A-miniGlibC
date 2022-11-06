@@ -1,6 +1,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+
 int main(int argc, char** argv){
     /*
     int* memory=calloc(2,sizeof(int));
@@ -8,20 +11,9 @@ int main(int argc, char** argv){
     memory[1]=5;
     free(memory);
     */
-    void* first=sbrk(0);
+   int fd=open("../testFile.txt",O_WRONLY);
+   write(fd,"maman",5);
+   write(fd,"maman",5);
 
-    int* memory=malloc(sizeof(int)*2);
- 
-    memory[0]=1;
-    memory[1]=2;
-
-    void* second=sbrk(0);
-    free(memory);
-
-   
-    int * third=malloc(0);
-    //int * third=sbrk(sizeof(int)*2);
-
-    printf("%p %p %p\n",first, second, third);
     return 0;
 }
