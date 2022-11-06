@@ -132,18 +132,22 @@ void test6(){
     
     MYFILE* my_file2=mini_fopen("../fileToWrite.txt",'w');
     if(my_file2!=NULL){
-        mini_fputc(my_file2,'a');
+        //mini_fputc(my_file2,'a');
+        mini_fwrite("p",sizeof(char),5,my_file2);
+        mini_fwrite("maman",sizeof(char),5,my_file2);
         mini_fwrite("maman",sizeof(char),5,my_file2);
         mini_fclose(my_file2);
     }
     
-    my_file2=mini_fopen("../fileToWrite.txt",'r');
+    my_file2=mini_fopen("../fileToRead.txt",'r');
     if(my_file2!=NULL){
-        char* caractere=mini_calloc(sizeof(char),2);
-        caractere[0]=mini_fgetc(my_file2);
-        caractere[1]='\0';
+        char* caractere=mini_calloc(sizeof(char),7);
+        mini_fread(caractere,sizeof(char),4,my_file2);
+        
         mini_printf(caractere);
+
         mini_printf("\n");
+        
         mini_fclose(my_file2);
     }
 

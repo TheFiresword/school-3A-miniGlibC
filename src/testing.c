@@ -11,7 +11,7 @@ int main(int argc, char** argv){
     memory[1]=5;
     free(memory);
     */
-   int fd=open("../testFile.txt",O_WRONLY);
+   int fd=open("../testFile.txt",O_RDONLY);
    write(fd,"maman",5);
    write(fd,"maman",5);
 

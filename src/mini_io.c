@@ -144,10 +144,9 @@ int mini_fwrite(void* buffer, int size_element, int number_element, MYFILE* file
     Renvoie le nombre de caractères écrits ou -1
     */
     
-    //Vérifier si on peut écrire dans le fd
 
     if(file->ind_write==-1){
-    //1ere écriture dans le fichier file
+        //1ere écriture dans le fichier file
         if((file->buffer_write=mini_calloc(size_element,IOBUFFER_SIZE))==(void*)-1){
             mini_perror("Erreur allocation mémoire du buffer write");
             return -1;
