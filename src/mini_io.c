@@ -27,15 +27,26 @@ MYFILE* mini_fopen(char* file, char mode){
     case 'b':
         converted_flag=O_RDWR;
         break;
+    case 'c':
+        converted_flag=O_WRONLY|O_CREAT;
+        break;
     default:
         converted_flag=O_RDONLY;
         break;
     }
-
-    if((fd=open(file,converted_flag))==-1){ 
-        mini_perror("Erreur d'ouverture du fichier");
-        return NULL;
+    if(converted_flag==(O_WRONLY|O_CREAT)){
+        if((fd=open(file,converted_flag,S_IRUSR | S_IWUSR |S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH))==-1){ 
+            mini_perror("Erreur d'ouverture du fichier");
+            return NULL;
+        }
     }
+    else{
+        if((fd=open(file,converted_flag))==-1){ 
+            mini_perror("Erreur d'ouverture du fichier");
+            return NULL;
+        }
+    }
+
     MYFILE* the_file= mini_calloc(sizeof(MYFILE),1);
     if (the_file!=(void*)-1){
         the_file->fd=fd;
@@ -71,10 +82,13 @@ MYFILE* mini_fopen(char* file, char mode){
         count++;
         actuel=actuel->suivant;
     }
-    printf("Open %d fichiers ouverts\n",count);
+    #ifdef DEBUG
+        printf("Open %d fichiers ouverts\n",count);
+    #endif
 
     return the_file;
 }  
+
 
 
 
@@ -85,21 +99,19 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
     Un autre read est déclenché que si ind_read est arrivé à la fin de buffer_read
     */
 
-   int effective_buffer_read_size;//Variable pour stocker la taille réelle du buffer read quand on le remplit
-
    if(file->ind_read ==-1){
-    //1ere lecture dans le fichier file
+        //1ere lecture dans le fichier file
         if((file->buffer_read=mini_calloc(size_element,IOBUFFER_SIZE))==(void*)-1){
             mini_perror("Erreur allocation mémoire du buffer read");
             return -1;
         }
         file->ind_read=0;
-        if((effective_buffer_read_size=read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element))==-1){
+        
+        if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element)==-1){
             mini_perror("Erreur de lecture du fichier");
             return -1;
         }
-        if(effective_buffer_read_size==0) //Fichier vide
-            return 0;
+        
    }
         
     int i=0;
@@ -112,7 +124,7 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
     while(i<number_element*size_element){
         if(file->ind_read==IOBUFFER_SIZE*size_element){
             //On est arrivé à la fin du buffer read, on le recharge avec un read
-            if((effective_buffer_read_size=read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element))==-1){
+            if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element)==-1){
                 mini_perror("Erreur de lecture du fichier");
                 mini_free(char_buffer);
                 mini_free(char_buffer_read);
@@ -120,7 +132,7 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
             }
             file->ind_read=0;    
         }
-        if(file->ind_read==effective_buffer_read_size && effective_buffer_read_size<IOBUFFER_SIZE*size_element){
+        if(char_buffer_read[file->ind_read]=='\0'){
             //on est arrivé à la fin du fichier
             break;
         }
@@ -129,7 +141,7 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
         file->ind_read++;
         i++;
     }
-    char_buffer[i]='\0';
+    //char_buffer[i]='\0';
 
     mini_free(char_buffer);
     mini_free(char_buffer_read);
@@ -230,7 +242,9 @@ int mini_fclose(MYFILE* file){
                 count++;
                 actuel=actuel->suivant;
             }
-            printf("Close: %d fichiers ouverts\n",count);
+            #ifdef DEBUG
+                printf("Close: %d fichiers ouverts\n",count);
+            #endif
 
         }
         else{
@@ -251,15 +265,16 @@ char mini_fgetc(MYFILE* file){
     /*
     Renvoie un caractère lu, -1 en cas d'erreur
     */
-    char* tempo_buffer=mini_calloc(sizeof(char),2);
+    char* tempo_buffer=mini_calloc(sizeof(char),1);
     if(tempo_buffer!=(void*)-1){
         char character;
         if(mini_fread(tempo_buffer,sizeof(char),1,file)!=-1){
             character=tempo_buffer[0];
+            mini_free(tempo_buffer);
             return character;   
         }
     }
-    mini_free(tempo_buffer);
+    
     return -1;
 }
 

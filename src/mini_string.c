@@ -10,7 +10,7 @@ int ind=-1;
 
 void mini_printf(char* chaine){
     if (ind==-1){
-      //1er appel de new_printf()
+      //1er appel de mini_printf()
       buffer=mini_calloc(sizeof(char),BUF_SIZE);
       if (buffer!=(void*)-1){
          ind=0;

@@ -114,8 +114,10 @@ void debogage(){
     struct malloc_element* zone_courante=malloc_list;
     int count=0;
     while (zone_courante!=NULL)
-    {
-        printf("Cellule %d dans la liste: %p--Statut:%d\n",count,zone_courante->memory,zone_courante->status);
+    {   
+        #ifdef DEBUG
+            printf("Cellule %d dans la liste: %p--Statut:%d\n",count,zone_courante->memory,zone_courante->status);
+        #endif
         zone_courante=zone_courante->next_malloc;
         count++;
     }

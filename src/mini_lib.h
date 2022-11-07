@@ -1,6 +1,7 @@
 #ifndef MINI_LIB_H
 #define MINI_LIB_H
 
+#define DEBUG
 
 void* mini_calloc (int size_element, int number_element);
 void mini_free(void *ptr);
