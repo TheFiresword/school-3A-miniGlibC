@@ -1,16 +1,23 @@
 # miniGlibC
-Projet 3A STI INSA CVL 11/2022
+<h3>Projet 3A STI INSA CVL 11/2022</h3>
 
--Implémentation de quelques fonctions de la glibc
--Implémentation de quelques commandes sytèmes
--Simulation d'un mini-shell
+<ul>
+<li>Implémentation de quelques fonctions de la glibc</li>
+<li>Implémentation de quelques commandes sytèmes</li>
+<li>Simulation d'un mini-shell</li>
+</ul>
 
 # Exécution
-Le projet comporte un makefile qui permet de générer 2 principaux exécutables:
--./unitTesting: qui permet de tester les fonctions implémentées
--./mini_shell: qui démarre le mini_shell implémenté
-Pour générer les exécutables, exécuter la commande <make> dans le dossier du projet.
+<p>Le projet comporte un makefile qui permet de générer 2 principaux exécutables:</p>
+<ul>
+<li>./unitTesting: qui permet de tester les fonctions implémentées</li>
+<li>./mini_shell: qui démarre le mini_shell implémenté</li>
+</ul>
+<br>
+
+<p>Pour générer les exécutables, exécuter la commande <make> dans le dossier du projet.<br>
 La commande <make mr_proper> permet de supprimer tous les exécutables et tous les fichiers objet générés.
+</p>
 
 # Réponses aux questions
 Exercice5:
