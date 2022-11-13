@@ -1,20 +1,34 @@
 # miniGlibC
+Projet 3A STI INSA CVL 11/2022
 
+-Implémentation de quelques fonctions de la glibc
+-Implémentation de quelques commandes sytèmes
+-Simulation d'un mini-shell
+
+# Exécution
+Le projet comporte un makefile qui permet de générer 2 principaux exécutables:
+-./unitTesting: qui permet de tester les fonctions implémentées
+-./mini_shell: qui démarre le mini_shell implémenté
+Pour générer les exécutables, exécuter la commande <make> dans le dossier du projet.
+La commande <make mr_proper> permet de supprimer tous les exécutables et tous les fichiers objet générés.
+
+# Réponses aux questions
 Exercice5:
-Il faut initialiser le buffer avec des '\0' avant de le renvoyer parce que sinon, des résidus de données peuvent être présentes dans la zone mémoire allouée. Et si on essaie de lire une zone mémoire qui contient des résidus, on obtient une erreur "undefined behavior"
+Il faut initialiser le buffer avec des '\0' avant de le renvoyer parce que sinon, des résidus de données peuvent être présentes dans la zone mémoire allouée. Cela peut générer des erreurs si on essaie de lire ces résidus
 
 Exercie6:
-La fonction free empêche d'accéder à l'espace mémoire dont l'adresse est passée en paramètre.
-Elle ne "libère" pas vraiment la mémoire. Donc les données qui étaient stockées sont conservées mais non accessibles.
+La fonction free libère l'espace mémoire dont l'adresse est passée en paramètre. Elle autorise le noyau à allouer cette zone mémoire à une autre variable ou fonction.
+Elle ne "libère" pas vraiment la mémoire car les données qui étaient stockées sont conservées.
 
-Exercice12:
+Exercice12: //a finir
 Pour tester mini_calloc et mini_free dans le main.c, j'ai alloué
 
 Exercice17:
-Le problème qu'il reste à régler est que lorsque la chaine ne comporte pas de retour à la ligne, elle n'est pas affichée. Elle reste stockée dans le buffer. Il faut donc vider le buffer avant de sortir(exit) de la fonction.
+Le problème qu'il reste à régler est que lorsque la chaine ne comporte pas de retour à la ligne et n'atteint pas la taille du buffer, elle n'est pas affichée. Elle reste stockée dans le buffer. Il faut donc vider le buffer avant de sortir(exit) de la fonction.
 
 Exercice20:
-Si le nombre de caractères lus est égal à la taille du buffer, ce qui se passe, c'est que le retour à la ligne est stockée sur l'entrée standard, et est exécuté comme une commande système.
+Si le nombre de caractères lus est supérieur égal à la taille du buffer, ce qui se passe, c'est que le reste de la chaine entrée est stockée sur l'entrée standard, et est exécuté comme une commande système.
+Pour éviter ce problème, je vide le buffer de stdin avec la fonction getchar()
 
 
 Exercice22: Les problèmes de sécurité
@@ -30,3 +44,11 @@ Pour la fonction mini_strcmp(), si l'une des chaînes vaut NULL, on ne peut pas 
 Exercice34:
 Si le programme se termine alors que le buffer d'écriture n'était pas plein, alors le contenu du buffer n'est pas écrit dans le fichier.
 Pour corriger ce problème, il faut flusher tous les fichiers ouverts avant le exit du programme.
+
+
+# Commentaires
+Toutes mes fonctions et programment fonctionnent parfaitement.
+J'ai amélioré l'implémentation des commandes sytèmes pour qu'elles aient le même comportement que les vraies commandes de base.
+Par exemple,le mini_head peut prendre n'importe quel nombre de fichiers en paramètres; il s'utilise avec l'option -n.
+Exemple d'utilisation: ./mini_head file1 file2 -n 3 file4
+

@@ -1,6 +1,8 @@
 #include "mini_lib.h"
-#include <stdio.h>
-
+/*
+Reimplementation de la commande système echo
+affiche à l'écran la chaine passée en paramètre, qui peut contenir des espaces
+*/
 
 int main(int argc, char** argv){
    

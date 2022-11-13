@@ -1,26 +1,12 @@
 #include "mini_lib.h"
-#include <stdio.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define BUFSIZE 512
-
-static void copy_file(char *src, char *dst){
-   MYFILE* fdsrc, *fddst;
-   char buffer[BUFSIZE];
-   int nchar;
-   
-   fdsrc=mini_fopen(src, 'r');
-   fddst=mini_fopen(dst, 'c');
-   if(fddst!=NULL && fdsrc!=NULL){
-        while((nchar = mini_fread(buffer,sizeof(char),BUFSIZE,fdsrc))!=0 && nchar!=-1)
-            mini_fwrite(buffer,sizeof(char),BUFSIZE,fddst);
-        
-   }
-   mini_fclose(fdsrc);
-   mini_fclose(fdsrc);
-}
-
+/*
+Reimplementation de la commande systeme cp
+Copie le contenu du fichier source (argv[1]) dans le fichier de destination(argv[2])
+Si le fichier de destination n'existe pas il est crée
+*/
 int main(int argc, char** argv){
     
     if(argc<3){
@@ -35,7 +21,25 @@ int main(int argc, char** argv){
     }
     char* src = argv[1];
     char * dst = argv[2];
-    copy_file(src, dst);
 
+    MYFILE* fdsrc, *fddst;
+    extern const int IOBUFFER_SIZE;
+    char *buffer=mini_calloc(sizeof(char),IOBUFFER_SIZE);
+    int count_characters=0;
+    
+    fdsrc=mini_fopen(src, 'r');
+    fddst=mini_fopen(dst, 'c');
+    if(fddst!=(void*)-1 && fdsrc!=(void*)-1 && buffer!=(void*)-1){
+        
+        count_characters=mini_fread(buffer,sizeof(char),IOBUFFER_SIZE,fdsrc);
+        while(count_characters!=0 && count_characters!=-1){
+            mini_fwrite(buffer,sizeof(char),IOBUFFER_SIZE,fddst);
+            count_characters=mini_fread(buffer,sizeof(char),IOBUFFER_SIZE,fdsrc);
+        }
+        
+        mini_fclose(fdsrc);
+        mini_fclose(fddst);
+        mini_free(buffer); 
+    }
     mini_exit();
 }

@@ -1,6 +1,5 @@
 #include "mini_lib.h"
 #include <unistd.h>
-#include <stdio.h>
 
 struct malloc_element
 {
@@ -11,16 +10,16 @@ struct malloc_element
 };
 
 // malloc_list est la variable globale qui représente la liste; elle pointe sur le 1er élement de la liste
-struct malloc_element *malloc_list=NULL;
+struct malloc_element *malloc_list=(void*)-1;
 
 
 
 void* mini_calloc (int size_element, int number_element){
     //Variable utilisée pour initialiser à 0 la zone mémoire allouée
-    unsigned char* allocated_memory=NULL;
+    unsigned char* allocated_memory=(void*)-1;
 
     /*SI la liste est vide, on crée une nouvelle zone mémoire et on l'ajoute à la tête de la liste*/
-    if(malloc_list==NULL){
+    if(malloc_list==(void*)-1){
 
         struct malloc_element *new_element= sbrk(sizeof(struct malloc_element));
         if(new_element==(void*)-1)
@@ -32,7 +31,7 @@ void* mini_calloc (int size_element, int number_element){
             else{
                 new_element->size=size_element*number_element;
                 new_element->status=1;
-                new_element->next_malloc=NULL;
+                new_element->next_malloc=(void*)-1;
 
                 //On initialise la zone mémoire allouée avec des '\0'
                 allocated_memory=new_element->memory;
@@ -53,7 +52,7 @@ void* mini_calloc (int size_element, int number_element){
     else{
         struct malloc_element* zone_courante=malloc_list;
         
-        while(zone_courante!=NULL){
+        while(zone_courante!=(void*)-1){
             if(zone_courante->status==0 && zone_courante->size >= size_element*number_element){
                 allocated_memory=zone_courante->memory;
 
@@ -81,7 +80,7 @@ void* mini_calloc (int size_element, int number_element){
             else{
                 new_element->size=size_element*number_element;
                 new_element->status=1;
-                new_element->next_malloc=NULL;
+                new_element->next_malloc=(void*)-1;
 
                 //On initialise la zone mémoire allouée avec des '\0'
                 allocated_memory=new_element->memory;
@@ -91,11 +90,11 @@ void* mini_calloc (int size_element, int number_element){
 
                 //On ajoute la cellule à la fin de la liste
                 /* Pour ajouter la zone allouée à la liste, il faut parcourir la liste
-                jusqu'à trouver la cellule de fin, c'est à dire celle dont l'élément next_malloc vaut NULL
+                jusqu'à trouver la cellule de fin, c'est à dire celle dont l'élément next_malloc vaut (void*)-1
                 */
                 
                 zone_courante=malloc_list;
-                while (zone_courante->next_malloc !=NULL)
+                while (zone_courante->next_malloc !=(void*)-1)
                 {
                     zone_courante=zone_courante->next_malloc;
                 }
@@ -109,27 +108,12 @@ void* mini_calloc (int size_element, int number_element){
     return (void*)-1;
 }
 
-void debogage(){
-    /*code de debugage*/
-    struct malloc_element* zone_courante=malloc_list;
-    int count=0;
-    while (zone_courante!=NULL)
-    {   
-        #ifdef DEBUG
-            printf("Cellule %d dans la liste: %p--Statut:%d\n",count,zone_courante->memory,zone_courante->status);
-        #endif
-        zone_courante=zone_courante->next_malloc;
-        count++;
-    }
-    
-}
-
 
 void mini_free(void *ptr){
-    if(ptr!=(void*)-1 && ptr!=NULL && malloc_list!=NULL){
+    if(ptr!=(void*)-1 && ptr!=(void*)-1 && malloc_list!=(void*)-1){
         //Il faut chercher dans la liste la cellule dont l'élément memory vaut ptr
         struct malloc_element* zone_courante=malloc_list;
-        while(zone_courante!=NULL){
+        while(zone_courante!=(void*)-1){
             if(zone_courante->memory==ptr){
                 zone_courante->status=0;
                 return;
@@ -146,7 +130,7 @@ void mini_exit(){
 
     extern OPEN_FILES* OPEN_FILES_LISTE;
     OPEN_FILES* actuel=OPEN_FILES_LISTE;
-    while (actuel!=NULL)
+    while (actuel!=(void*)-1)
     {
         mini_fflush(actuel->cellule);
         actuel=actuel->suivant;
