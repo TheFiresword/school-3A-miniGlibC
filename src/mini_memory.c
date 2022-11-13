@@ -1,6 +1,12 @@
 #include "mini_lib.h"
 #include <unistd.h>
 
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
+Implémentation des fonctions de gestion de la mémoire
+*/
 struct malloc_element
 {
     void* memory; 

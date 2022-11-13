@@ -1,10 +1,15 @@
 #include "mini_lib.h"
 
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Reimplémentation de la commande système grep
 peut prendre 2 ou plus paramètres
 Param1: mot recherché
 Parm2...n: fichiers dans lequels il faut chercher
+Si 1 seul argument est passé au programme, il lit en boucle l'entrée standard et l'affiche si l'argument passé se trouve dans la saisie. 
+La saisie de "exit" permet d'arrêter cette boucle
 */
 int main(int argc, char** argv){
     if(argc==1){

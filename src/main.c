@@ -3,7 +3,10 @@
 
 
 static void memory_print(){
-    /*
+    /**
+     * @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
     Cette fonction affiche le contenu de la mémoire.
     Plus explicitement, elle affiche tous les éléments de la liste des zones mémoires allouées par mini_calloc()
     */

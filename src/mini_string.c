@@ -2,7 +2,12 @@
 #include "mini_lib.h"
 #include <errno.h>
 
-
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
+Implémentation des fonctions de gestion des chaines de caractère
+*/
 int BUF_SIZE=1024;
 char* buffer=(void*)-1;
 int ind=-1;

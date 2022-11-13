@@ -1,5 +1,8 @@
 #include "mini_lib.h"
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Reimplementation de la commande système echo
 affiche à l'écran la chaine passée en paramètre, qui peut contenir des espaces
 */

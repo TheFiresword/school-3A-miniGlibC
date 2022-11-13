@@ -2,10 +2,17 @@
 
 
 int main(int argc, char** argv){
-    /*
+    
+
+    /**
+     * @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
     Programme mini_cat
     Affiche le contenu entier des fichiers qui sont passés en paramètre
     Peut prendre plusieurs fichiers en paramètres
+    Si aucun argument n'est passé au programme, il lit en boucle l'entrée standard et l'affiche. 
+    La saisie de "exit" permet d'arrêter cette boucle
     */
     extern int IOBUFFER_SIZE;
     char* buffer=mini_calloc(sizeof(char),IOBUFFER_SIZE);

@@ -2,7 +2,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Reimplementation de la commande systeme cp
 Copie le contenu du fichier source (argv[1]) dans le fichier de destination(argv[2])
 Si le fichier de destination n'existe pas il est crée

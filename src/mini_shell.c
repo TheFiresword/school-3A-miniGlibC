@@ -13,13 +13,21 @@
 #define ARG_MAX_LENGHT 100
 #define ARG_MAX_NUMBER 100
 #define PATH_MAX 4096
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Ce programme simule un mini-shell. Une fois lancé, il attend sur l'entrée
 standard que l'on entre une commande. Cette commande sera ensuite exécutée.
 Le processus père attendra que le processus fils se termine avant de demander à nouveau à 
 l'utilisateur une commande
-Si la commande correspond à exit, le shell s'arrête
-De plus 
+Si la commande correspond à exit, le shell s'arrête.
+Si la commande correspond à help, le shell affiche ma page d'aide personnalisée.
+Si l'utilisateur saisit les commandes de base (echo, head,tail,..) qui sont réimplémentées, le programme redirige vers mes commandes
+réimplémentées.
+Pour exécuter ./mini_grep par exemple, l'utilisateur peut saisir soit: ./mini_grep soit mini_grep soit grep.
+La gestion de l'historique ( appui sur les touches flèche) est gérée de même que l'autocomplétion.
+Il suffit que READLINE_INSTALLED soit définie.
 */
 
 char* built_commands[]={

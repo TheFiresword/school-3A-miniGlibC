@@ -2,6 +2,12 @@
 #include "mini_lib.h"
 #include <unistd.h>
 
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
+Implémentation des fonctions de gestion des flux d'entrée sortie
+*/
 const int IOBUFFER_SIZE=2048;
 
 OPEN_FILES* OPEN_FILES_LISTE=(void*)-1;

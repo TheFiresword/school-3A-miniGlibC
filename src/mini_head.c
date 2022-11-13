@@ -1,10 +1,15 @@
 #include "mini_lib.h"
 
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Reimplementation de la commande head
 Prend en paramètre un ou plusieurs fichiers
 Affiche N lignes de chaque fichier
 L'option -n N peut être positionné n'importe où dans la commande
+Si aucun argument n'est passé au programme, il lit en boucle l'entrée standard et l'affiche. 
+La saisie de "exit" permet d'arrêter cette boucle
 */
 int main(int argc, char** argv){
 

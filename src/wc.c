@@ -1,9 +1,14 @@
 #include "mini_lib.h"
 
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Reimplementation de la commande wc
 Prend en parametre un nom de fichier
 Renvoie le nombre de mots que contient ce fichier; un mot est délimité par ' '
+Si aucun argument n'est passé au programme, il lit en boucle l'entrée standard. 
+La saisie de "exit" permet d'arrêter cette boucle
 */
 int main(int argc, char** argv){
 

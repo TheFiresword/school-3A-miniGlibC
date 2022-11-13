@@ -4,7 +4,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/*
+/**
+* @author: Junior Sedogbo
+* @date: 13/11/2022
+* @version: 1.0
 Programme qui prend en paramètre un ou plusieurs fichiers
 Le(s) crée s'il n'existe(nt) pas ou le(s) remet(s) à zéro s'il(s) existe(nt)
 */

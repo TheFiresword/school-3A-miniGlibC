@@ -4,7 +4,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/*
+/**
+* @author: Junior Sedogbo
+     * @date: 13/11/2022
+     * @version: 1.0
 Réimplémentation de la commande touch
 Crée un fichier vide s'il n'existe pas
 Peut prendre plusieurs fichiers en paramètres
