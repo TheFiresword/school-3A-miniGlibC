@@ -112,12 +112,14 @@ void standard_io_test(){
     Vérifie le bon fonctionnement de mini_printf() et mini_scanf()
     */
     char my_buffer[10];
-    mini_printf("Veuillez saisir quelque chose\n");
+    mini_printf("Veuillez saisir 10 caractères\n");
     mini_scanf(my_buffer,10);
+    //On vide le buffer de stdin avec getchar() pour éviter que les caractères restants éventuels soint exécutés comme une commande
     int c=0;
     while (c!='\n' && c!=EOF){
         c=getchar();
     }
+    
     mini_printf(my_buffer);
     mini_printf("\n");
 }
@@ -284,13 +286,9 @@ void file_functions_2_test(){
     C'est à dire les fonctions mini_fwrite() et mini_fputc()
     */
     char* buffer="Je teste la fonction mini_fwrite.Ça marche non? Vous croyez? heeee mais ecoutez moi les reufs\n";
-    double double_buffer[5];
-    for(int i=0;i<5;i++){
-        double_buffer[i]=i+0.1*i;
-    }
     MYFILE* my_file2=mini_fopen("./fileToWrite.txt",'a'); //mode append
     MYFILE* my_file3=mini_fopen("./thirdTestFile.txt",'b');// mode lecture écriture
-    MYFILE* my_file4=mini_fopen("./fourthTestFile.txt",'c');//mode création écriture
+
 
     if(my_file2!=(void*)-1){
         char tmp[3];
@@ -320,21 +318,7 @@ void file_functions_2_test(){
         }
         mini_printf("\n");
     }
-
-    if(my_file4!=(void*)-1){
-        mini_fwrite(double_buffer,sizeof(double),5,my_file4);
-        mini_fclose(my_file4);
-    }
-    /*
-    my_file4=mini_fopen("./fourthTestFile.txt",'r');
-    double tmp[5];
-    mini_fread(tmp,sizeof(double),5,my_file4);
-    #ifdef USE_PRINTF
-        printf("%f %f %f\n",tmp[1],tmp[3],tmp[4]);
-    #endif
-    mini_fclose(my_file4);
-    */
- 
+    
     mini_fclose(my_file2);
     mini_fclose(my_file3);
 }

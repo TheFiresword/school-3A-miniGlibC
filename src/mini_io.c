@@ -6,7 +6,7 @@
 * @author: Junior Sedogbo
      * @date: 13/11/2022
      * @version: 1.0
-Implémentation des fonctions de gestion des flux d'entrée sortie
+Implémentation des fonctions de gestion des flux d'entrée et de sortie
 */
 const int IOBUFFER_SIZE=2048;
 
