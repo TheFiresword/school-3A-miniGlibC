@@ -13,17 +13,18 @@
 <li>./unitTesting: qui permet de tester les fonctions implémentées</li>
 <li>./mini_shell: qui démarre le mini_shell implémenté</li>
 </ul>
-<br>
 
-<p>Pour générer les exécutables, exécuter la commande <make> dans le dossier du projet.<br>
-La commande <make mr_proper> permet de supprimer tous les exécutables et tous les fichiers objet générés.
+
+<p>Pour générer les exécutables, exécuter la commande <strong>make</strong> dans le dossier du projet.<br>
+La commande <strong>make mr_proper</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
 </p>
+<p>De plus, le dossier comporte quelques fichiers textes utiles au programme de test unitTesting</p>
 
 # Réponses aux questions
-Exercice5:
+<u><h4>Exercice5:</h4></u>
 Il faut initialiser le buffer avec des '\0' avant de le renvoyer parce que sinon, des résidus de données peuvent être présentes dans la zone mémoire allouée. Cela peut générer des erreurs si on essaie de lire ces résidus
 
-Exercie6:
+<u>Exercie6:</u>
 La fonction free libère l'espace mémoire dont l'adresse est passée en paramètre. Elle autorise le noyau à allouer cette zone mémoire à une autre variable ou fonction.
 Elle ne "libère" pas vraiment la mémoire car les données qui étaient stockées sont conservées.
 
