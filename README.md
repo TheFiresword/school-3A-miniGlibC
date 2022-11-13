@@ -42,6 +42,7 @@ Pour éviter ce problème, je vide le buffer de stdin avec la fonction getchar()
 
 
 <h4>Exercice22: Les problèmes de sécurité<h4>
+<ul>
 <li><p>Pour la fonction mini_strlen(), si le pointeur s vaut NULL, on ne peut pas calculer la taille.</p></li>
 
 <li><p>Pour la fonction mini_strcpy(), on a le même problème. Si l'un des pointeurs vaut NULL, on ne peut rien faire.
@@ -50,7 +51,7 @@ Pour régler ce problème, il faut copier au maximum taille de d caractères.
 On a un 3ème problème: si la chaine d était préalablement remplie, la copie génère une segmentation fault.</p>
 </li>
 <li>Pour la fonction mini_strcmp(), si l'une des chaînes vaut NULL, on ne peut pas comparer.</li>
-
+</ul>
 <h4>Exercice34: Problème buffer d'écriture de mini_fwrite</h4>
 <p>Si le programme se termine alors que le buffer d'écriture n'était pas plein, alors le contenu du buffer n'est pas écrit dans le fichier.
 Pour corriger ce problème, il faut flusher tous les fichiers ouverts avant le exit du programme.</p>
