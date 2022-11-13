@@ -191,7 +191,7 @@ void execute_command(char** argv){
     else{
         //on est dans le processus parent
         //on attend
-        wait((void*)-1);
+        wait(NULL);
         return;
     }
 
@@ -215,7 +215,6 @@ int main(int argc, char** argv){
         mini_printf("debian@debian11:~");
         mini_printf(getcwd(path,PATH_MAX));
         mini_printf("$ >\n");
-        //vider le buffer stdin
 
         my_argc=get_command(command,ARG_MAX_LENGHT*ARG_MAX_NUMBER,my_argv);
         

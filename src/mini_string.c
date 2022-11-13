@@ -56,7 +56,7 @@ Retourne le nombre de caractères lus.
     mini_perror("Erreur à la lecture de l'entree standard");
  }
  else
-    buffer[read_character]='\0'; 
+    buffer[read_character-1]='\0'; 
  
  return read_character;
 }
