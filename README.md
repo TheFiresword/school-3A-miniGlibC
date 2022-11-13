@@ -61,9 +61,12 @@ De plus, si la taille de la chaine d est plus petite que celle de s, on risque d
 Pour régler ce problème, il faut copier au maximum taille de d caractères.
 On a un 3ème problème: si la chaine d était préalablement remplie, la copie génère une segmentation fault.</p>
 </li>
-<li>Pour la fonction <strong>mini_strcmp()</strong>, si l'une des chaînes vaut NULL, on ne peut pas comparer.</li>
+<li>Pour la fonction mini_strcmp(), si l'une des chaînes vaut NULL, on ne peut pas comparer.</li>
 </ul>
 
 <h4>Exercice34: Problème buffer d'écriture de mini_fwrite</h4>
 <p>Si le programme se termine alors que le buffer d'écriture n'était pas plein, alors le contenu du buffer n'est pas écrit dans le fichier.
 Pour corriger ce problème, il faut flusher tous les fichiers ouverts avant le exit du programme.</p>
+
+
+
