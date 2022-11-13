@@ -45,10 +45,10 @@ Pour éviter ce problème, je vide le buffer de stdin avec la fonction getchar()
 <ul>
 <li><p>Pour la fonction mini_strlen(), si le pointeur s vaut NULL, on ne peut pas calculer la taille.</p></li>
 
-<li><p>Pour la fonction mini_strcpy(), on a le même problème. Si l'un des pointeurs vaut NULL, on ne peut rien faire.
+<li>Pour la fonction mini_strcpy(), on a le même problème. Si l'un des pointeurs vaut NULL, on ne peut rien faire.
 De plus, si la taille de la chaine d est plus petite que celle de s, on risque de causer un buffer overflow; c'est à dire que la fonction va écrire les caractères débordants dans des cases mémoires qui n'appartiennent pas à la chaine d.
 Pour régler ce problème, il faut copier au maximum taille de d caractères.
-On a un 3ème problème: si la chaine d était préalablement remplie, la copie génère une segmentation fault.</p>
+On a un 3ème problème: si la chaine d était préalablement remplie, la copie génère une segmentation fault.
 </li>
 <li>Pour la fonction mini_strcmp(), si l'une des chaînes vaut NULL, on ne peut pas comparer.</li>
 </ul>
