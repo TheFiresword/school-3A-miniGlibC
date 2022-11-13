@@ -38,6 +38,7 @@ void init(void){
     mini_printf("\n\n\t\t(:====WELCOME FRIEND====:)");
     mini_printf("\n\t\t---I'M YOUR MINI SHELL---");
     mini_printf("\n\t   |__ You can enter your comands __|\n\n\n");
+    mini_printf("\nTap help to get the help page and exit to exit the program\n\n\n");
     mini_printf("*************************************\
 ******************************\n\n");
 }
@@ -50,6 +51,7 @@ int get_command(char* command, int size_buffer, char** argv){
     */
     
     mini_scanf(command,size_buffer);
+    
     //Je sépare la commande en plusieurs mots
     //Je vérifie si la commande contient au moins un caractère- sinon y a rien à faire
     int i=0;
@@ -226,7 +228,7 @@ int main(int argc, char** argv){
             execute_command(my_argv);   
 
     } while(mini_strcmp(my_argv[0],"exit")!=0);
-    
+
     mini_printf("\n\n\n\n******************|-_-| BYE FRIEND |-_-|*****************\n\n\n\n");
     
     mini_exit();

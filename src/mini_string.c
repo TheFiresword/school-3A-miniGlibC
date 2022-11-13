@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include "mini_lib.h"
 #include <errno.h>
-#include <stdio.h>//pour utiliser getchar() pour vider le buffer de stdin
 
 
 int BUF_SIZE=1024;
@@ -56,16 +55,9 @@ Retourne le nombre de caractères lus.
  if((read_character=read(STDIN_FILENO, buffer, size_buffer))==-1){
     mini_perror("Erreur à la lecture de l'entree standard");
  }
- else{
+ else
     buffer[read_character]='\0'; 
-    //on vide le buffer du clavier
-    int c=0;
-    while (c!='\n' && c!=EOF)
-    {
-        c=getchar();
-    }
-    
- }
+ 
  return read_character;
 }
 

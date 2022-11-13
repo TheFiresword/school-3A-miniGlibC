@@ -38,7 +38,7 @@ Cf fonction de test <strong>void memory_allocation_test()</strong>
 
 <h4>Exercice20: Problème mini_scanf</h4>
 <p>Si le nombre de caractères lus est supérieur égal à la taille du buffer, ce qui se passe, c'est que le reste de la chaine entrée est stockée sur l'entrée standard, et est exécuté comme une commande système.
-Pour éviter ce problème, je vide le buffer de stdin avec la fonction getchar().</p>
+Pour éviter ce problème, je vide le buffer de stdin avec la fonction getchar() après l'appel à <strong>mini_scanf()</strong>.</p>
 
 
 <h4>Exercice22: Les problèmes de sécurité</h4>

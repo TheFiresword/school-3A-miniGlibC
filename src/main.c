@@ -111,6 +111,10 @@ void standard_io_test(){
     char my_buffer[10];
     mini_printf("Veuillez saisir quelque chose\n");
     mini_scanf(my_buffer,10);
+    int c=0;
+    while (c!='\n' && c!=EOF){
+        c=getchar();
+    }
     mini_printf(my_buffer);
     mini_printf("\n");
 }
