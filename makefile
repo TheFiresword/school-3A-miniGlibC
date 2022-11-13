@@ -7,7 +7,7 @@ FLAGS	 = -g -c -Wall
 LFLAGS	 = 
 
 
-all: unitTesting  mini_shell clean 
+all: readlinelib unitTesting  mini_shell clean 
 
 unitTesting: $(OBJS) main.o
 	$(CC) -g $(OBJS) main.o -o unitTesting  $(LFLAGS)
