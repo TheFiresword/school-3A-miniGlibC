@@ -4,7 +4,7 @@
 <ul>
 <li>Implémentation de quelques fonctions de la glibc</li>
 <li>Implémentation de quelques commandes sytèmes</li>
-<li>Simulation d'un mini-shell</li>
+<li>Simulation d'un mini-shell qui peut gérer l'historique et l'autocomplétion</li>
 </ul>
 
 # Exécution
@@ -15,10 +15,12 @@
 </ul>
 
 
-<p>Pour générer les exécutables, exécuter la commande <strong>make</strong> dans le dossier du projet.<br>
-La commande <strong>make mr_proper</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
-</p>
-<p>De plus, le dossier comporte quelques fichiers textes utiles au programme de test unitTesting</p>
+<p>Pour générer les exécutables, exécuter la commande <strong>make</strong> dans le dossier du projet.</p>
+<p><strong>NB:</strong>Grâce à la librairie <strong>readline</strong>, j'ai pu ajouter la gestion de l'historique dans mon mini_shell, ainsi que l'autocomplétion via la touche <strong>tabulation</strong>.<br>
+Cette librairie est installée automatiquement par le <strong>makefile</strong>.<br>
+Si pour une raison ou une autre l'installation de la librairie échoue, ou si vous ne voulez pas l'utiliser, veuillez mettre en commentaire la ligne #define READLINE_INSTALLED dans le fichier header mini_lib.h</p>
+<p>La commande <strong>make mr_proper</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
+<br>De plus, le dossier comporte quelques fichiers textes utiles au programme de test unitTesting</p>
 
 # Réponses aux questions
 <h4>Exercice5: Initialisation buffer</h4>
@@ -62,5 +64,7 @@ Pour corriger ce problème, il faut flusher tous les fichiers ouverts avant le e
 <p>Toutes mes fonctions et programment fonctionnent parfaitement.
 J'ai amélioré l'implémentation des commandes sytèmes pour qu'elles aient le même comportement que les vraies commandes de base.
 Par exemple,le mini_head peut prendre n'importe quel nombre de fichiers en paramètres; il s'utilise avec l'option -n.
-Exemple d'utilisation: <strong>./mini_head file1 file2 -n 3 file4</strong>
+Exemple d'utilisation: <strong>./mini_head file1 file2 -n 3 file4</strong>.<br>
+De plus, j'ai redirigé les vraies commandes sytème (head, tail, echo, ...) vers leur équivalent (mini_head, mini_tail, mini_echo,...).<br>
+
 </p>

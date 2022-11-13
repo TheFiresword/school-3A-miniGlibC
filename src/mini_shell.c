@@ -4,6 +4,12 @@
 #include <sys/wait.h>
 
 
+#ifdef READLINE_INSTALLED
+    //Pour ajouter l'autocomplétion et l'historique dans mon mini-shell
+    #include <readline/readline.h>
+    #include <readline/history.h>
+#endif
+
 #define ARG_MAX_LENGHT 100
 #define ARG_MAX_NUMBER 100
 #define PATH_MAX 4096
@@ -13,6 +19,7 @@ standard que l'on entre une commande. Cette commande sera ensuite exécutée.
 Le processus père attendra que le processus fils se termine avant de demander à nouveau à 
 l'utilisateur une commande
 Si la commande correspond à exit, le shell s'arrête
+De plus 
 */
 
 char* built_commands[]={
@@ -50,8 +57,12 @@ int get_command(char* command, int size_buffer, char** argv){
      * Renvoie le nombre d'arguments
     */
     
-    mini_scanf(command,size_buffer);
-    
+    #ifdef READLINE_INSTALLED
+        command=readline(">>>");
+    #else
+        mini_scanf(command,size_buffer);
+    #endif
+
     //Je sépare la commande en plusieurs mots
     //Je vérifie si la commande contient au moins un caractère- sinon y a rien à faire
     int i=0;
@@ -69,8 +80,12 @@ int get_command(char* command, int size_buffer, char** argv){
         i++;
     }
     if(non_null){
-        //commande non vide
-   
+        //La commande est non vide
+        //On l'ajoute dans l'historique si  READLINE_INSTALLED est définie
+        #ifdef READLINE_INSTALLED
+            add_history(command);
+        #endif
+
         i=0;
         while (i<length)
         {

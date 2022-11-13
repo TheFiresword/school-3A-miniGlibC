@@ -39,8 +39,8 @@ mini_cp:$(OBJS) mini_cp.o
 wc:$(OBJS) wc.o
 	$(CC) -g $(OBJS) wc.o -o wc $(LFLAGS)
 
-mini_shell:$(OBJS) mini_shell.o mini_cat mini_clean mini_echo mini_grep mini_head mini_tail mini_touch wc mini_cp
-	$(CC) -g $(OBJS) mini_shell.o -o mini_shell $(LFLAGS)
+mini_shell:$(OBJS) mini_shell.o mini_cat mini_clean mini_echo mini_grep mini_head mini_tail mini_touch wc mini_cp readlinelib
+	$(CC) -g $(OBJS) mini_shell.o -lreadline -o mini_shell $(LFLAGS)
 
 mini_memory.o: src/mini_memory.c
 	$(CC) $(FLAGS) src/mini_memory.c 
@@ -84,6 +84,9 @@ wc.o: src/wc.c
 main.o: src/main.c
 	$(CC) $(FLAGS) src/main.c 
 
+readlinelib:
+	sudo apt-get install libreadline-dev
+	
 mr_proper:clean
 	rm -f $(OUT)
 
