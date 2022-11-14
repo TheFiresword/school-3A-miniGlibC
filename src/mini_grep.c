@@ -12,6 +12,13 @@ Si 1 seul argument est passé au programme, il lit en boucle l'entrée standard 
 La saisie de "exit" permet d'arrêter cette boucle
 */
 int main(int argc, char** argv){
+    
+    /*
+    Pour faire la recherche de mot dans un fichier, je lis ligne par ligne le fichier avec ma fonction mini_freadline() et je vérifie si
+    le mot est présent dans ces lignes avec ma fonction mini_searchlinewithpattern().
+    Si le mot est présent, ma fonction renvoie la ligne et je l'affiche.
+    */
+
     if(argc==1){
         mini_printf("Usage: mini_grep [OPTION]... PATTERNS [FILE]...\nTry 'mini_grep --help' for more information.\n");
         mini_exit();
@@ -43,7 +50,7 @@ int main(int argc, char** argv){
                 if(fd!=(void*)-1){
                     
                     int count=0;
-                    count=mini_freadline(buffer,sizeof(char),fd);
+                    count=mini_freadline(buffer,fd);
                     mini_printf(file);
                     mini_printf(":");
                     while(count!=-1 && count!=0){
@@ -52,7 +59,7 @@ int main(int argc, char** argv){
                             mini_printf(result);
                             mini_printf("\n");
                         }
-                        count=mini_freadline(buffer,sizeof(char),fd);
+                        count=mini_freadline(buffer,fd);
                     }
                     mini_fclose(fd);
                 }

@@ -20,7 +20,7 @@
 <p><strong>NB: </strong>Grâce à la librairie <strong>readline</strong>, j'ai pu ajouter la gestion de l'historique dans mon mini_shell, ainsi que l'autocomplétion via la touche <strong>tabulation</strong>.<br>
 Vous pouvez installer cette librairie via la commande: <trong>sudo apt-get install libreadline-dev</strong>. <br> 
 Par défaut mon programme mini_shell ne s'en sert pas. Mais si vous voulez tester les fonctionnalités d'autocomplétion et d'historique
-Veuillez  décommenter la ligne <strong>#define READLINE_INSTALLED</strong> dans le fichier header <strong>mini_lib.h</strong>, et recompiler mini_shell avec la commande qui suit: <== <strong>gcc -Wall mini_memory.o mini_io.o mini_string.o  mini_shell.o -lreadline -o mini_shell</strong> ==>
+Veuillez  décommenter la ligne <strong>#define READLINE_INSTALLED</strong> dans le fichier header <strong>mini_lib.h</strong>, et recompiler mini_shell avec la commande qui suit: <== <strong>gcc -Wall mini_memory.c mini_io.c mini_string.c  mini_shell.c -lreadline -o mini_shell</strong> ==>
 <p>La commande <strong>make clean</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
 
 

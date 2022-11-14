@@ -5,6 +5,7 @@
      * @version: 1.0
 Reimplementation de la commande système echo
 affiche à l'écran la chaine passée en paramètre, qui peut contenir des espaces
+Le programme affiche tous les arguments passés en paramètres.
 */
 
 int main(int argc, char** argv){

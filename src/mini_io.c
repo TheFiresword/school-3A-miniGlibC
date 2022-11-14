@@ -1,4 +1,4 @@
-#include <fcntl.h>
+include <fcntl.h>
 #include "mini_lib.h"
 #include <unistd.h>
 
@@ -101,7 +101,6 @@ MYFILE* mini_fopen(char* file, char mode){
 
     return the_file;
 }  
-
 
 int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file){
     /*
@@ -283,6 +282,7 @@ int mini_fclose(MYFILE* file){
 int mini_fseek(MYFILE* file,int offset,int whence){
     /*
     Déplace le curseur d'un fichier ouvert
+    Renvoie la nouvelle position
     */
     int position;
     if((position=(int)lseek(file->fd,offset,whence))==-1)
@@ -291,7 +291,9 @@ int mini_fseek(MYFILE* file,int offset,int whence){
 }  
 int mini_countlines(char* file){
     /*
-    Cette fonction compte le nombre de lignes dans un fichier 
+    Cette fonction compte le nombre de lignes dans un fichier et le renvoie.
+    Le fichier doit contenir des chaines de caractère
+    Pour cela, elle incrémente un compteur à chaque lecture de ligne que je fais grâce à la fonction mini_freadline()
     */
     int count_caracters;
     int count_lines=0;

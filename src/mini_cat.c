@@ -11,9 +11,11 @@ int main(int argc, char** argv){
     Programme mini_cat
     Affiche le contenu entier des fichiers qui sont passés en paramètre
     Peut prendre plusieurs fichiers en paramètres
-    Si aucun argument n'est passé au programme, il lit en boucle l'entrée standard et l'affiche. 
+    Si aucun argument n'est passé au programme, il lit en boucle l'entrée standard et l'affiche. C'est le comportement de la vraie commande
+    cat.
     La saisie de "exit" permet d'arrêter cette boucle
     */
+
     extern int IOBUFFER_SIZE;
     char* buffer=mini_calloc(sizeof(char),IOBUFFER_SIZE);
 
@@ -25,6 +27,7 @@ int main(int argc, char** argv){
                 MYFILE* fd=mini_fopen(argv[i],'r');
                 if(fd!=(void*)-1){
                     count=mini_fread(buffer,sizeof(char),IOBUFFER_SIZE,fd);
+                    //On lit et on affiche le fichier tant qu'on n'est pas arrivés à la fin
                     while(count!=-1 && count!=0){
                         mini_printf(buffer);
                         count=mini_fread(buffer,sizeof(char),IOBUFFER_SIZE,fd);

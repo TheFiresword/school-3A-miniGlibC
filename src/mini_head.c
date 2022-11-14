@@ -13,6 +13,22 @@ La saisie de "exit" permet d'arrêter cette boucle
 */
 int main(int argc, char** argv){
 
+/* Pour implémenter le mini_tail, je cherche d'abord parmi les arguments entrés, si l'un d'eux correspond à '-n'
+Si oui, je regarde s'il y a un autre argument après lui pour récupérer le nombre N de lignes.
+S'il n'y a pas d'autre argument je renvoie une erreur.
+Sinon, je convertis en entier l'argument qui suit et qui devrait correspondre à N.
+Si la conversion me renvoie -1, ça veut dire que cet argument ne contenait pas un nombre. Il faut que ce soit une chaine purement numérique
+sans symbole alphabétique. Ex: -n 1af ne marche pas; mais -n 1 marche
+Sinon on récupère alors N.
+
+Ensuite je lis puis j'affiche ces N lignes.
+
+S'il n'y a pas d'option -n on affiche entièrement les fichiers passés en paramètre.
+Et si aucun fichier n'est passé en paramètre, le programme lit en boucle l'entrée standard et l'affiche. C'est le comportement de la commande
+de base tail.
+La saisie de "exit" permet d'arrêter cette boucle.
+*/
+
 int i=1;
 int N=-1;
     for(i=1;i<argc;i++){
@@ -69,12 +85,12 @@ int N=-1;
                     mini_printf(file);
                     mini_printf(" <==\n");
 
-                    count_caracters=mini_freadline(buffer,sizeof(char),fd);
+                    count_caracters=mini_freadline(buffer,fd);
                     while(count_lines<N && count_caracters!=-1 && count_caracters!=0){
                         mini_printf(buffer);
                         mini_printf("\n");
                         count_lines++;
-                        count_caracters=mini_freadline(buffer,sizeof(char),fd);
+                        count_caracters=mini_freadline(buffer,fd);
                     }
                     mini_fclose(fd);
                     mini_free(buffer);

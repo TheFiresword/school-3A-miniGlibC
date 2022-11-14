@@ -8,14 +8,16 @@
      * @version: 1.0
 Implémentation des fonctions de gestion des chaines de caractère
 */
-int BUF_SIZE=1024;
+
+int BUF_SIZE=1024; //le buffer peut contenir 1024 caractères sans le \0
+//Le buffer qui sera utilisé 
 char* buffer=(void*)-1;
 int ind=-1;
 
 void mini_printf(char* chaine){
     if (ind==-1){
-      //1er appel de mini_printf()
-      buffer=mini_calloc(sizeof(char),BUF_SIZE);
+      //buffer non encore initialisé
+      buffer=mini_calloc(sizeof(char),BUF_SIZE+1);
       if (buffer!=(void*)-1){
          ind=0;
       }
@@ -56,14 +58,14 @@ Si l'utilisateur saisit plus de size_buffer caractères, on efface les caractèr
 qui dépassent
 Retourne le nombre de caractères lus.
 */
- int read_character;
- if((read_character=read(STDIN_FILENO, buffer, size_buffer))==-1){
-    mini_perror("Erreur à la lecture de l'entree standard");
- }
- else
-    buffer[read_character-1]='\0'; 
- 
- return read_character;
+    int read_character;
+
+    if((read_character=read(STDIN_FILENO, buffer, size_buffer))==-1)
+        mini_perror("Erreur à la lecture de l'entree standard");
+    else
+        buffer[read_character-1]='\0'; 
+    
+    return read_character;
 }
 
 
@@ -120,7 +122,7 @@ char* mini_strrchr(char* string, int c){
     
     /*
     Personal function:: for fun
-    reimplementation of strrchr
+    reimplementation de la fonction strrchr() qui renvoie un pointeur sur la denrière occurence de c dans string
     */
     c=(unsigned char)c;
     char*occurence=(void*)-1;
@@ -138,7 +140,7 @@ char* mini_strrchr(char* string, int c){
 char* mini_strcspn(char* chaine, char* pattern){
     /*
     Personal function:: for fun
-    reimplementation of strcspn
+    reimplementation de la fonction strcspn()
     Cherche pattern dans chaine
     renvoie un pointeur sur la première occurence de pattern
     Sinon renvoie (void*)-1
@@ -163,8 +165,8 @@ char* mini_strcspn(char* chaine, char* pattern){
 
 char* mini_searchlinewithpattern(char* line, char* pattern){
     /*
-    Personal function:: for fun
-    Cherche pattern dans line.
+    Personal function:
+    Cherche let mot pattern dans la chaine line qui correspond à une ligne.
     Une ligne étant délimitée par \n
     Renvoie la ligne si elle contient pattern
     Sinon renvoie (void*)-1
@@ -193,11 +195,13 @@ char* mini_strcat(char* chaine1, char* chaine2){
 
 int mini_atoi(char* str,int with_alphabetic){
     /*
-    This function converts a string into an integer
-    if with_alphanbetic is set to 1, then this function has the same
-    behavior as atoi()
-    Else, the function returns an integer if and only if the str does not
-    contain a non numeric caracter
+    Cette fonction est une réimplémentation de atoi().
+    Elle convertit une chaine en un entier.
+    Le paramètre optionnel with_alphabetic est un booléen qui permet de préciser si on accepte les chaines avec
+    des caractères alphabétiques.
+    Si with_alphabetic vaut 1 alors la fonction a le même comportement que atoi()
+    Sinon la fonction effectue la conversion si et seulement si la chaine str ne contient que des chiffres.
+    Ce comportement m'est utile dans mes programmes mini_tail et mini_head.
     */
     int number=0;
     int lenght=mini_strlen(str);
@@ -208,17 +212,15 @@ int mini_atoi(char* str,int with_alphabetic){
         number=number*10 +str[i]-'0';
     }
     if(!with_alphabetic){
-        if(i<lenght){
-            //si la chaine contient des lettres la fonction renvoie -1
-            //Utile pour mon programme mini_head
+        //si la chaine contient des lettres la fonction renvoie -1
+        if(i<lenght)
             return -1;
-        }
     }
     return number;
 }
 
 char* mini_itoa(int number, char* chaine){
-    /*
+    /* Réimplémentation de la fonction itoa()
     J'utilise le fait que les codes ASCII des chiffres {0,1,2,3,4,5,6,7,8,9}
     forment une suite arithmétique de raison 1
     Ex : '1'+1='2'.
@@ -262,10 +264,4 @@ void mini_perror(char * message){
     char tmp[32];
     mini_printf(mini_itoa(errno,tmp));
     mini_printf("\n");
-}
-
-void exit_properly(int status){
-   write(STDOUT_FILENO,buffer,ind);
-   mini_free(buffer);  
-   _exit(status);
 }

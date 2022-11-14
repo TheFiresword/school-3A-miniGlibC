@@ -7,10 +7,7 @@
 
 void* mini_calloc (int size_element, int number_element);
 void mini_free(void *ptr);
-
-
 void mini_exit();
-void exit_properly(int status);
 
 void mini_printf(char* chaine);
 int mini_scanf(char* buffer, int size_buffer);
@@ -35,7 +32,7 @@ struct MYFILE
 typedef struct MYFILE MYFILE;
 MYFILE* mini_fopen(char* file, char mode);
 int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file);
-int mini_freadline(void* buffer,int size_element, MYFILE* file);//I've added this function
+int mini_freadline(char* buffer, MYFILE* file);//I've added this function
 int mini_fwrite(void* buffer, int size_element, int number_element, MYFILE* file);
 int mini_fflush(MYFILE* file);
 int mini_fseek(MYFILE* file,int offset,int whence);//I've added this function

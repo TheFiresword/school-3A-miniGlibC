@@ -116,6 +116,11 @@ void* mini_calloc (int size_element, int number_element){
 
 
 void mini_free(void *ptr){
+    /*
+    Cette fonction "librère" la zone mémoire vers laquelle pointe ptr.
+    Pour cela, elle cherche dans la liste la cellule dont l'élément memroy vaut ptr.
+    Si elle trouve cette cellule elle change son statut en 0.
+    */
     if(ptr!=(void*)-1 && ptr!=(void*)-1 && malloc_list!=(void*)-1){
         //Il faut chercher dans la liste la cellule dont l'élément memory vaut ptr
         struct malloc_element* zone_courante=malloc_list;
@@ -133,14 +138,23 @@ void mini_free(void *ptr){
 
 
 void mini_exit(){
-
+    /**
+     * Cette fonction est appelée pour sortir d'un programme.
+     * Elle récupère la liste des fichiers ouverts, et flushe chacun de ces fichiers.
+     * Ensuite elle force l'écriture du buffer de mini_memory.c sur la sortie standard
+     * pour pouvoir écrire les éventuels caractères non encore écrits.
+    */
     extern OPEN_FILES* OPEN_FILES_LISTE;
     OPEN_FILES* actuel=OPEN_FILES_LISTE;
+    extern char* buffer ; // buffer de la bibliothèque mini_memory.c
+    extern int ind; //l'index de ce buffer
+    
     while (actuel!=(void*)-1)
     {
         mini_fflush(actuel->cellule);
         actuel=actuel->suivant;
     }
-    
-    exit_properly(0); 
+    write(STDOUT_FILENO,buffer,ind);
+    mini_free(buffer);  
+    _exit(0);
 }

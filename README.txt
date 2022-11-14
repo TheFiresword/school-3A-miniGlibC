@@ -28,7 +28,7 @@ via la touche tabulation.
 Vous pouvez installer cette librairie via la commande: sudo apt-get install libreadline-dev 
 Par défaut mon programme mini_shell ne s'en sert pas. Mais si vous voulez tester les fonctionnalités d'autocomplétion et d'historique
 Veuillez  décommenter la ligne #define READLINE_INSTALLED dans le fichier header mini_lib.h, et recompiler mini_shell avec la commande qui
-suit: <== gcc -Wall mini_memory.o mini_io.o mini_string.o  mini_shell.o -lreadline -o mini_shell ==>
+suit: <== gcc -Wall mini_memory.c mini_io.c mini_string.c  mini_shell.c -lreadline -o mini_shell ==>
 
 La commande make clean permet de supprimer tous les exécutables, tous les fichiers textes et tous les fichiers objet générés.
 

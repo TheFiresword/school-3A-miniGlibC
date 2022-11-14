@@ -46,7 +46,7 @@ char* built_commands[]={
 
 void init(void){
     /**
-     * Initialisation du mini-shell. Bienvenue
+     * Initialisation du mini-shell. Affiche un message de bienvenue
     */
     mini_printf("\n\n\n\n*************************************\
 ******************************");
@@ -60,7 +60,7 @@ void init(void){
 
 int get_command(char* command, int size_buffer, char** argv){
     /**
-     * Fonction qui écrit l'entrée standard dans le buffer command, et parse la commande en plusieurs
+     * Fonction qui écrit la commande écrite par l'utilisateur dans le buffer command, et parse cette commande en plusieurs
      * arguments. Ces arguments sont stockés dans le tableau de chaines argv
      * Renvoie le nombre d'arguments
     */
@@ -140,6 +140,10 @@ List of commands supported:\n\n\n \
 void execute_command(char** argv){
     /**
      * Fonction qui exécute la commande
+     * Elle fork le processus mini_shell et exécute la commande passée dans ce processus fils.
+     * Le processus parent attend la fin d'exécution du processus fils
+     * L'utilisateur peut saisir les dimunitifs des commands. Ex: echo au lieu de mini_echo
+     * Les commandes de base (echo, head, tail ...) sont donc redirigées vers mes commandes.
     */
 
 
@@ -221,6 +225,9 @@ void execute_command(char** argv){
 }
 
 int main(int argc, char** argv){
+    /**
+     * Ce programme contient une boucle qui s'arrête seulement quand l'utilisateur tape la commande exit.
+    */
 
     char command[ARG_MAX_LENGHT*ARG_MAX_NUMBER];
     char path[PATH_MAX];

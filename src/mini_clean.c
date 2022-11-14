@@ -17,7 +17,7 @@ int main(int argc, char** argv){
         for(int i=1;i<argc;i++){
             char* file_name=argv[i];
             if(access(file_name,F_OK)==-1){
-                //Fichier n'existe pas      
+                //Fichier n'existe pas. On le crée avec open puis on le ferme.      
                 int tempo;
                 if((tempo=open(file_name,O_CREAT,S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH))!=-1)
                     close(tempo);
