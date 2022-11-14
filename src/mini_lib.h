@@ -1,9 +1,9 @@
 #ifndef MINI_LIB_H
 #define MINI_LIB_H
 
-#define DEBUG// Active le debugage ie l'affichage à l'écran de quelques lignes de test
+//#define DEBUG// Active l'affichage de messages de debogage quand on ouvre et on ferme des fichiers.
 #define USE_PRINTF// Autorise l'utilisation de la fonction printf pour afficher des adresses mémoires en hexadécimal
-#define READLINE_INSTALLED// La librairie externe readline est correctement installée
+//#define READLINE_INSTALLED// La librairie externe readline est correctement installée
 
 void* mini_calloc (int size_element, int number_element);
 void mini_free(void *ptr);

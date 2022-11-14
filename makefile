@@ -5,9 +5,15 @@ OUT= unitTesting  mini_shell mini_cat mini_clean mini_echo mini_grep mini_head m
 CC	 = gcc
 FLAGS	 = -g -c -Wall
 LFLAGS	 = 
+FILES = fileToRead.txt fileToWrite.txt secondTestFile.txt thirdTestFile.txt
 
+all: generateFiles unitTesting  mini_shell mr_proper 
 
-all: readlinelib unitTesting  mini_shell clean 
+generateFiles:
+	$ echo "I'mab; oyabod,ywhotcoandfjlsfsmfslyizlnflnlsh  sfjkazomw;,ngfiofeLFJLSFMSMLIEJFGJMJIOSJFjlsfjmsfjiejfmjslfmI dont know what i'm doing\nhelp pe meopajflkse\njmsfjssi\ni cnaoi odirad\nfdmsfjmzirzefjdsmskfsmlsjgsizeioamvnssmfa\nbye" >fileToRead.txt
+	$ echo "Je teste la fonction mini_fwrite.\n" > fileToWrite.txt
+	$ touch thirdTestFile.txt
+	$ echo "help pe meopajflkse hey bro i'm coding msjfmsjfsjf \nright now a mini glibc, do you believe it ? wooooaoaoaohh i'm famousssss\nI'm so powerful right now i can hack everything hahahhahahahahhahahhahahahahah.\njmsfjssi\ni cnaoi odirad\nfdmsfjmzirzefjdsmskfsmlsjgsizeioamvnssmfa\nbye" > secondTestFile.txt
 
 unitTesting: $(OBJS) main.o
 	$(CC) -g $(OBJS) main.o -o unitTesting  $(LFLAGS)
@@ -39,8 +45,8 @@ mini_cp:$(OBJS) mini_cp.o
 wc:$(OBJS) wc.o
 	$(CC) -g $(OBJS) wc.o -o wc $(LFLAGS)
 
-mini_shell:$(OBJS) mini_shell.o mini_cat mini_clean mini_echo mini_grep mini_head mini_tail mini_touch wc mini_cp readlinelib
-	$(CC) -g $(OBJS) mini_shell.o -lreadline -o mini_shell $(LFLAGS)
+mini_shell:$(OBJS) mini_shell.o mini_cat mini_clean mini_echo mini_grep mini_head mini_tail mini_touch wc mini_cp
+	$(CC) -g $(OBJS) mini_shell.o -o mini_shell $(LFLAGS)
 
 mini_memory.o: src/mini_memory.c
 	$(CC) $(FLAGS) src/mini_memory.c 
@@ -87,8 +93,8 @@ main.o: src/main.c
 readlinelib:
 	sudo apt-get install libreadline-dev
 	
-mr_proper:clean
-	rm -f $(OUT)
+clean:mr_proper
+	rm -f $(OUT) $(FILES)
 
-clean:
+mr_proper:
 	rm -f $(OBJS) mini_touch.o mini_echo.o mini_cat.o mini_head.o mini_tail.o mini_clean.o mini_grep.o wc.o main.o mini_shell.o mini_cp.o

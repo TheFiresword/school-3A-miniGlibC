@@ -11,16 +11,18 @@
 <p>Le projet comporte un makefile qui permet de générer 2 principaux exécutables:</p>
 <ul>
 <li>./unitTesting: qui permet de tester les fonctions implémentées</li>
-<li>./mini_shell: qui démarre le mini_shell implémenté</li>
+<li>./mini_shell: qui permet de démarrer le mini_shell implémenté</li>
 </ul>
 
 
 <p>Pour générer les exécutables, exécuter la commande <strong>make</strong> dans le dossier du projet.</p>
-<p><strong>NB: </strong>Grâce à la librairie <strong>readline</strong>, j'ai pu ajouter la gestion de l'historique dans mon mini_shell, ainsi que l'autocomplétion via la touche <strong>tabulation</strong>.<br>
-Cette librairie est installée automatiquement par le <strong>makefile</strong>.<br>
-Si pour une raison ou une autre l'installation de la librairie échoue, ou si vous ne voulez pas l'utiliser, veuillez mettre en commentaire la ligne #define READLINE_INSTALLED dans le fichier header mini_lib.h</p>
-<p>La commande <strong>make mr_proper</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
 <br>De plus, le dossier comporte quelques fichiers textes utiles au programme de test unitTesting</p>
+<p><strong>NB: </strong>Grâce à la librairie <strong>readline</strong>, j'ai pu ajouter la gestion de l'historique dans mon mini_shell, ainsi que l'autocomplétion via la touche <strong>tabulation</strong>.<br>
+Vous pouvez installer cette librairie via la commande: <trong>sudo apt-get install libreadline-dev</strong>. <br> 
+Par défaut mon programme mini_shell ne s'en sert pas. Mais si vous voulez tester les fonctionnalités d'autocomplétion et d'historique
+Veuillez  décommenter la ligne <strong>#define READLINE_INSTALLED</strong> dans le fichier header <strong>mini_lib.h</strong>, et recompiler mini_shell avec la commande qui suit: <== <strong>gcc -Wall mini_memory.o mini_io.o mini_string.o  mini_shell.o -lreadline -o mini_shell</strong> ==>
+<p>La commande <strong>make clean</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
+
 
 # Commentaires
 <p>Toutes mes fonctions et programment fonctionnent parfaitement.J'ai implémenté d'autres fonctions non demandées notamment dans mini_string.c : <strong>mini_strcat(), mini_strrchr(), mini_itoa()</strong>, etc.<br>

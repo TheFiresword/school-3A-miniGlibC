@@ -286,14 +286,14 @@ void file_functions_2_test(){
     C'est à dire les fonctions mini_fwrite() et mini_fputc()
     */
     char* buffer="Je teste la fonction mini_fwrite.Ça marche non? Vous croyez? heeee mais ecoutez moi les reufs\n";
-    MYFILE* my_file2=mini_fopen("./fileToWrite.txt",'a'); //mode append
-    MYFILE* my_file3=mini_fopen("./thirdTestFile.txt",'b');// mode lecture écriture
+    MYFILE* my_file2=mini_fopen("./fileToWrite.txt",'a'); //mode append + écriture
+    MYFILE* my_file3=mini_fopen("./thirdTestFile.txt",'b');// mode lecture écriture + écriture
 
 
     if(my_file2!=(void*)-1){
         char tmp[3];
         mini_printf("Nombre de caracteres ecrits: ");
-        mini_printf(mini_itoa(mini_fwrite(buffer,sizeof(char),90,my_file2),tmp));
+        mini_printf(mini_itoa(mini_fwrite(buffer,sizeof(char),96,my_file2),tmp));
         mini_printf("\n");
 
         for(int i=0;i<4;i++){
@@ -309,14 +309,19 @@ void file_functions_2_test(){
         for(int i=0;i<4;i++){
             mini_fputc(my_file3,'a');
         }
-        char tmp[2];
-        tmp[1]='\0';
-        mini_printf("Lecture du fichier thirdTestFile.txt après écriture de aaaa\n");
-        for(int i=0;i<4;i++){
-            tmp[0]= mini_fgetc(my_file3);
-            mini_printf(tmp);
+        mini_fclose(my_file3);
+        
+        my_file3=mini_fopen("./thirdTestFile.txt",'b');
+        if(my_file3!=(void*)-1){
+            char tmp[2];
+            tmp[1]='\0';
+            mini_printf("Lecture du fichier thirdTestFile.txt après écriture de aaaa\n");
+            for(int i=0;i<4;i++){
+                tmp[0]= mini_fgetc(my_file3);
+                mini_printf(tmp);
+            }
+            mini_printf("\n");
         }
-        mini_printf("\n");
     }
     
     mini_fclose(my_file2);
