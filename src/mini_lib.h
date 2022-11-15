@@ -2,7 +2,7 @@
 #define MINI_LIB_H
 
 //#define DEBUG// Active l'affichage de messages de debogage quand on ouvre et on ferme des fichiers.
-#define USE_PRINTF// Autorise l'utilisation de la fonction printf pour afficher des adresses mémoires en hexadécimal
+#define USE_PRINTF// Autorise l'utilisation de la fonction printf pour afficher des adresses mémoires en hexadécimal et des variables double
 //#define READLINE_INSTALLED// La librairie externe readline est correctement installée
 
 void* mini_calloc (int size_element, int number_element);

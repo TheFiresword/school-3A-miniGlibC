@@ -28,7 +28,7 @@ via la touche tabulation.
 Vous pouvez installer cette librairie via la commande: sudo apt-get install libreadline-dev 
 Par défaut mon programme mini_shell ne s'en sert pas. Mais si vous voulez tester les fonctionnalités d'autocomplétion et d'historique
 Veuillez  décommenter la ligne #define READLINE_INSTALLED dans le fichier header mini_lib.h, et recompiler mini_shell avec la commande qui
-suit: <== gcc -Wall mini_memory.c mini_io.c mini_string.c  mini_shell.c -lreadline -o mini_shell ==>
+suit: <== gcc -Wall src/mini_memory.c src/mini_io.c src/mini_string.c  src/mini_shell.c -lreadline -o mini_shell ==>
 
 La commande make clean permet de supprimer tous les exécutables, tous les fichiers textes et tous les fichiers objet générés.
 
@@ -98,3 +98,26 @@ Exercice22: Les problèmes de sécurité dans mini_string.c
 Exercice34: Problème buffer d'écriture de mini_fwrite
 Si le programme se termine alors que le buffer d'écriture n'était pas plein, alors le contenu du buffer n'est pas écrit dans le fichier. 
 Pour corriger ce problème, il faut flusher tous les fichiers ouverts avant le exit du programme.
+
+
+Exercice40: Benchmark
+Pour benchmarker le programme mini_cp, il faut l'exécuter avec la commande time en faisant varier la taille du buffer utilisé dans le programme.
+Je copie le fichier src/mini_lib.h vers un nouveau fichier.
+On constate alors que le temps d'exécution augmente quand on diminue la taille du buffer.
+
+En ayant un buffer qui fait la taille(IOBUFFER_SIZE) des buffers de lecture de d'écriture de fichier (buffer_read, buffer_write), on a:
+real    0m0.002s
+user    0m0.000s
+sys     0m0.002s
+
+Avec une taille de 1024 on obtient:
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+Avec une taille de 1 on obtient:
+real    0m0.003s
+user    0m0.002s
+sys     0m0.001s
+
+Les résultats sont donc cohérents avec ceux du TD

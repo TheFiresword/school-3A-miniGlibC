@@ -107,7 +107,11 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
     Lit IOBUFFER_SIZE elements avec read et les stocke dans buffer_read.
     Les éléments de buffer_read sont recopiés dans buffer
     Un autre read est déclenché que si ind_read est arrivé à la fin de buffer_read
+    Renvoie le nombre de bytes lus
     */
+   //On caste les pointeurs void en char* pour pouvoir lire ou écrire byte par byte 
+   char* char_buffer_read;
+   char* char_buffer=(char*)buffer;
 
    if(file->ind_read ==-1){
         //1ere lecture dans le fichier file
@@ -116,33 +120,58 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
             return -1;
         }
         file->ind_read=0;
-        
-        if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element)==-1){
+        char_buffer_read=(char*)file->buffer_read;
+
+        int count_bytes=read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element);
+        if(count_bytes==-1){
             mini_perror("Erreur de lecture du fichier");
             return -1;
         }
         
    }
         
-    int i=0;
-    char* char_buffer_read=(char*)file->buffer_read;
-    char* char_buffer=(char*)buffer;
-
-    while(i<number_element*size_element && char_buffer_read[file->ind_read]!='\0'){
-        if(file->ind_read==IOBUFFER_SIZE*size_element){
-            //On est arrivé à la fin du buffer read, on le recharge avec un read
-            if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element)==-1){
-                mini_perror("Erreur de lecture du fichier");
-                return -1;
+    int i=0;   
+    char_buffer_read=(char*)file->buffer_read;
+    
+    //Si size_element vaut 1 je vais supposer qu'on veut lire des chaines de caractère; et donc que le fichier contient du texte.
+    //Ainsi quand buffer_read[file->ind_read] vaut \0, j'ai attend la fin du fichier
+    if(size_element==1){
+        while(i<number_element*size_element && char_buffer_read[file->ind_read]!='\0'){
+            if(file->ind_read==IOBUFFER_SIZE*size_element){
+                //On est arrivé à la fin du buffer read, on le recharge avec un read
+                int count_bytes=read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element);
+                if(count_bytes==-1){
+                    mini_perror("Erreur de lecture du fichier");
+                    return -1;
+                }
+                file->ind_read=0; 
             }
-            file->ind_read=0;    
-        }
 
-        char_buffer[i]=char_buffer_read[file->ind_read];
-        file->ind_read++;
-        i++;
+            char_buffer[i]=char_buffer_read[file->ind_read];
+            file->ind_read++;
+            i++;
+        }
+        char_buffer[i]='\0';
     }
-    char_buffer[i]='\0';
+    //Pour les autres types de données, on lit la taille de bytes demandés.
+    //Je me suis rendu compte que la décomposition d'un int en bytes contenait des \0 et que ça ne signifie pas la fin du fichier.
+    else{
+        while(i<number_element*size_element){
+            if(file->ind_read==IOBUFFER_SIZE*size_element){
+                //On est arrivé à la fin du buffer read, on le recharge avec un read
+                int count_bytes=read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element);
+                if(count_bytes==-1){
+                    mini_perror("Erreur de lecture du fichier");
+                    return -1;
+                }
+                file->ind_read=0; 
+            }
+
+            char_buffer[i]=char_buffer_read[file->ind_read];
+            file->ind_read++;
+            i++;
+        }
+    }
     return i;
 
 }
@@ -209,22 +238,45 @@ int mini_fwrite(void* buffer, int size_element, int number_element, MYFILE* file
         
         file->ind_write=0;   
     }
+    //On caste ensuite les pointeurs void* vers des  pointeurs char* pour pouvoir accéder byte byte aux zones mémoires
     char* char_buffer=(char*)buffer;
     char* char_buffer_write=(char*)file->buffer_write;
     int i=0;
-    while(i<number_element*size_element && char_buffer[i]!='\0'){
-        if(file->ind_write==IOBUFFER_SIZE*size_element){
-            //Le buffer write est rempli
-            if(write(file->fd,file->buffer_write,IOBUFFER_SIZE*size_element)==-1){
-                mini_perror("Erreur d'ecriture dans le fichier");
-                return -1;      
-            }
-            file->ind_write=0;
-            
-        }   
-        char_buffer_write[file->ind_write]=char_buffer[i];
-        file->ind_write++;
-        i++;
+
+    //Si size_element vaut 1 je vais supposer qu'on veut écrire des chaines de caractère; et donc que le fichier contient du texte.
+    //Ainsi je peux arrêter ma boucle si buffer[i] vaut \0 et qu'on n'a pas encore la taille de bytes demandés
+    //Cela peut arriver si le buffer a une taille réelle plus petite que number_element*size_element
+    if(size_element==1){
+        while(i<number_element*size_element && char_buffer[i]!='\0'){
+            if(file->ind_write==IOBUFFER_SIZE*size_element){
+                //Le buffer write est rempli
+                if(write(file->fd,file->buffer_write,IOBUFFER_SIZE*size_element)==-1){
+                    mini_perror("Erreur d'ecriture dans le fichier");
+                    return -1;      
+                }
+                file->ind_write=0;
+                
+            }   
+            char_buffer_write[file->ind_write]=char_buffer[i];
+            file->ind_write++;
+            i++;
+        }
+    }
+    else{
+        while(i<number_element*size_element){
+            if(file->ind_write==IOBUFFER_SIZE*size_element){
+                //Le buffer write est rempli
+                if(write(file->fd,file->buffer_write,IOBUFFER_SIZE*size_element)==-1){
+                    mini_perror("Erreur d'ecriture dans le fichier");
+                    return -1;      
+                }
+                file->ind_write=0;
+                
+            }   
+            char_buffer_write[file->ind_write]=char_buffer[i];
+            file->ind_write++;
+            i++;
+        }
     }
     return i;
 }
@@ -321,14 +373,11 @@ char mini_fgetc(MYFILE* file){
     Renvoie un caractère lu dans un fichier contenant des chaines de caractère, -1 en cas d'erreur
     */
     char tempo_buffer[1+1];
-    if(tempo_buffer!=(void*)-1){
         char character;
         if(mini_fread(tempo_buffer,sizeof(char),1,file)!=-1){
             character=tempo_buffer[0];
             return character;   
         }
-    }
-    
     return -1;
 }
 

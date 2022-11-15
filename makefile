@@ -5,14 +5,14 @@ OUT= unitTesting  mini_shell mini_cat mini_clean mini_echo mini_grep mini_head m
 CC	 = gcc
 FLAGS	 = -g -c -Wall
 LFLAGS	 = 
-FILES = fileToRead.txt fileToWrite.txt secondTestFile.txt thirdTestFile.txt
+FILES = fileToRead.txt fileToWrite.txt secondTestFile.txt writeChar.txt writeInt.txt 
 
 all: generateFiles unitTesting  mini_shell mr_proper 
 
 generateFiles:
 	$ echo "I'mab; oyabod,ywhotcoandfjlsfsmfslyizlnflnlsh  sfjkazomw;,ngfiofeLFJLSFMSMLIEJFGJMJIOSJFjlsfjmsfjiejfmjslfmI dont know what i'm doing\nhelp pe meopajflkse\njmsfjssi\ni cnaoi odirad\nfdmsfjmzirzefjdsmskfsmlsjgsizeioamvnssmfa\nbye" >fileToRead.txt
 	$ echo "Je teste la fonction mini_fwrite.\n" > fileToWrite.txt
-	$ touch thirdTestFile.txt
+	$ touch writeChar.txt writeInt.txt 
 	$ echo "help pe meopajflkse hey bro i'm coding msjfmsjfsjf \nright now a mini glibc, do you believe it ? wooooaoaoaohh i'm famousssss\nI'm so powerful right now i can hack everything hahahhahahahahhahahhahahahahah.\njmsfjssi\ni cnaoi odirad\nfdmsfjmzirzefjdsmskfsmlsjgsizeioamvnssmfa\nbye" > secondTestFile.txt
 
 unitTesting: $(OBJS) main.o

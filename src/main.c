@@ -113,7 +113,7 @@ void standard_io_test(){
     */
     char my_buffer[10];
     mini_printf("Veuillez saisir 10 caractères\n");
-    mini_scanf(my_buffer,10);
+    mini_scanf(my_buffer,11);
     //On vide le buffer de stdin avec getchar() pour éviter que les caractères restants éventuels soint exécutés comme une commande
     int c=0;
     while (c!='\n' && c!=EOF){
@@ -135,7 +135,7 @@ void string_functions_test(){
     mini_printf(mini_itoa(mini_strlen(chaine1),taille));
     mini_printf("\n");
  
-    mini_printf("Nombre de caractères copiés ");
+    mini_printf("Nombre de caractères copiés pour la chaine 'briffaut'= ");
     char count[32];
     mini_printf(mini_itoa(mini_strcpy("briffaut",chaine1),count));
     mini_printf("\n");
@@ -161,12 +161,16 @@ void string_functions_test(){
     mini_printf("\n");
    
 
-    mini_printf("Chaine1 vs chaine2: ");
+    mini_printf("Comparaison de : ");
+    mini_printf(chaine1);
+    mini_printf(" et ");
+    mini_printf(chaine2);
+    mini_printf(" ");
     char result[32];
     if(!mini_strcmp(chaine1,chaine2))
-        mini_strcpy("Identique",result);
+        mini_strcpy("Identiques",result);
     else
-        mini_strcpy("Non identique",result);
+        mini_strcpy("Non identiques",result);
     
     mini_printf(result);
     mini_printf("\n");
@@ -177,19 +181,27 @@ void string_functions_test(){
     mini_printf("Chaine 3: ");
     mini_printf(chaine3);
     mini_printf(" de taille ");
+    //remplir le tableau de \0 pour le réinitialiser
     for(int i=0;i<32;i++)
         taille[i]='\0';
+
     mini_printf(mini_itoa(mini_strlen(chaine3),taille));
     mini_printf("\n");
 
 
-    mini_printf("Chaine1 vs chaine3: ");
+    mini_printf("Comparaison de : ");
+    mini_printf(chaine1);
+    mini_printf(" et ");
+    mini_printf(chaine3);
+    mini_printf(" ");
+
     for(int i=0;i<32;i++)
         result[i]='\0';
+
     if(!mini_strcmp(chaine1,chaine3))
-        mini_strcpy("Identique",result);
+        mini_strcpy("Identiques",result);
     else
-        mini_strcpy("Non identique",result);
+        mini_strcpy("Non identiques",result);
     
     mini_printf(result);
     mini_printf("\n");
@@ -203,7 +215,11 @@ void string_functions_test(){
 
     //checking mini_strcat()
     char* concat_chaine45=mini_strcat(chaine4, chaine5);
-    mini_printf("Concatenation de chaine4 et chaine5: ");
+    mini_printf("Concatenation de ");
+    mini_printf(chaine4);
+    mini_printf(" et ");
+    mini_printf(chaine5);
+    mini_printf(" : ");
     mini_printf(concat_chaine45);
     mini_printf("\n");
 
@@ -229,6 +245,7 @@ void string_functions_test(){
     //checking atoi et itoa
     int number=95870;
     char converted_number[6];
+    mini_printf(" L'entier 95870 convertit en chaine donne: ");
     mini_printf(mini_itoa(number,converted_number));
     mini_printf("\n");
 }
@@ -248,13 +265,16 @@ void file_functions_1_test(){
             int tempo_1=mini_fread(first_buffer,sizeof(char),100,my_file);
             int tempo_2=mini_fread(second_buffer,sizeof(char),50,my_file_2);
             
-            mini_printf("1er fichier\n");
+            mini_printf("---Dans le fichier fileToRead.txt---\n");
             while(tempo_1!=0 && tempo_1!=-1){
                 mini_printf("On a lu: ");
+                char tmp_entier[32];
+                mini_printf(mini_itoa(tempo_1,tmp_entier));
+                mini_printf(" caracteres: ");
                 mini_printf(first_buffer);
                 mini_printf("\n");
 
-                mini_printf("Testing fgetc:10 caracteres ");
+                mini_printf("10 appels a fgetc: ");
                 char tmp[2];
                 for(int i=0;i<10;i++){
                     tmp[0]=mini_fgetc(my_file);
@@ -265,7 +285,7 @@ void file_functions_1_test(){
                 tempo_1=mini_fread(first_buffer,sizeof(char),100,my_file);
             }
 
-            mini_printf("\n2nd fichier\n");  
+            mini_printf("\n---Dans le fichier secondTestFile.txt---\n");  
             while(tempo_2!=0 && tempo_2!=-1){
                 mini_printf("On a lu: ");
                 char tmp[32];
@@ -286,8 +306,15 @@ void file_functions_2_test(){
     C'est à dire les fonctions mini_fwrite() et mini_fputc()
     */
     char* buffer="Je teste la fonction mini_fwrite.Ça marche non? Vous croyez? heeee mais ecoutez moi les reufs\n";
+    
+    // tableau d'entiers qu'on va écrire dans un fichier
+    int  int_buffer[10];
+    for(int i=0;i<10;i++)
+        int_buffer[i]=i+1;
+
     MYFILE* my_file2=mini_fopen("./fileToWrite.txt",'a'); //mode append + écriture
-    MYFILE* my_file3=mini_fopen("./thirdTestFile.txt",'b');// mode lecture écriture + écriture
+    MYFILE* my_file3=mini_fopen("./writeChar.txt",'b');// mode lecture écriture + écriture
+    MYFILE* int_file=mini_fopen("./writeInt.txt",'b');// mode lecture écriture + écriture    
 
 
     if(my_file2!=(void*)-1){
@@ -311,21 +338,46 @@ void file_functions_2_test(){
         }
         mini_fclose(my_file3);
         
-        my_file3=mini_fopen("./thirdTestFile.txt",'b');
+        my_file3=mini_fopen("./writeChar.txt",'b');
         if(my_file3!=(void*)-1){
             char tmp[2];
             tmp[1]='\0';
-            mini_printf("Lecture du fichier thirdTestFile.txt après écriture de aaaa\n");
+            mini_printf("Lecture du fichier writeChar.txt après écriture de aaaa\n");
             for(int i=0;i<4;i++){
                 tmp[0]= mini_fgetc(my_file3);
                 mini_printf(tmp);
             }
-            mini_printf("\n");
         }
     }
     
+    mini_printf("\n");
+
+    if(int_file!=(void*)-1){
+        //Test qui vérifie qu'on peut passer un buffer de type int à mini_fwrite
+        mini_fwrite(int_buffer,sizeof(int),10,int_file);
+        mini_fclose(int_file);
+        
+        int_file=mini_fopen("./writeInt.txt",'b');
+
+        if(int_file!=(void*)-1){
+            mini_printf("Lecture du fichier writeInt.txt après écriture de 1 2 3 4 5 6 7 8 9 10\n");
+            
+            //On lit les 10 entiers écrits dans le fichier int_file
+            int get_int_buffer[10];
+            mini_fread(get_int_buffer,sizeof(int),10,int_file);
+            char tempo[10];
+            for(int i=0;i<10;i++){
+                mini_printf(mini_itoa(get_int_buffer[i],tempo));
+                mini_printf("\t");
+            
+            }
+        }     
+    }
+    mini_printf("\n");
+     
     mini_fclose(my_file2);
     mini_fclose(my_file3);
+    mini_fclose(int_file);
 }
 
 

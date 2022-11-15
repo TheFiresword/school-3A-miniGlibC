@@ -20,7 +20,7 @@
 <p><strong>NB: </strong>Grâce à la librairie <strong>readline</strong>, j'ai pu ajouter la gestion de l'historique dans mon mini_shell, ainsi que l'autocomplétion via la touche <strong>tabulation</strong>.<br>
 Vous pouvez installer cette librairie via la commande: <trong>sudo apt-get install libreadline-dev</strong>. <br> 
 Par défaut mon programme mini_shell ne s'en sert pas. Mais si vous voulez tester les fonctionnalités d'autocomplétion et d'historique
-Veuillez  décommenter la ligne <strong>#define READLINE_INSTALLED</strong> dans le fichier header <strong>mini_lib.h</strong>, et recompiler mini_shell avec la commande qui suit: <== <strong>gcc -Wall mini_memory.c mini_io.c mini_string.c  mini_shell.c -lreadline -o mini_shell</strong> ==>
+Veuillez  décommenter la ligne <strong>#define READLINE_INSTALLED</strong> dans le fichier header <strong>mini_lib.h</strong>, et recompiler mini_shell avec la commande qui suit: <== <strong>gcc -Wall src/mini_memory.c src/mini_io.c src/mini_string.c  src/mini_shell.c -lreadline -o mini_shell</strong> ==>
 <p>La commande <strong>make clean</strong> permet de supprimer tous les exécutables et tous les fichiers objet générés.
 
 
@@ -70,5 +70,24 @@ On a un 3ème problème: si la chaine d était préalablement remplie, la copie 
 <p>Si le programme se termine alors que le buffer d'écriture n'était pas plein, alors le contenu du buffer n'est pas écrit dans le fichier.
 Pour corriger ce problème, il faut flusher tous les fichiers ouverts avant le exit du programme.</p>
 
-
+<h4>Exercice40: Benchmark</h4>
+<p>Pour benchmarker le programme mini_cp, il faut l'exécuter avec la commande time en faisant varier la taille du buffer utilisé dans le programme.
+On constate alors que le temps d'exécution augmente quand on diminue la taille du buffer.
+<br>
+En ayant un buffer qui fait la taille(IOBUFFER_SIZE) des buffers de lecture de d'écriture de fichier (buffer_read, buffer_write), on a:
+real    0m0.002s<br>
+user    0m0.000s<br>
+sys     0m0.002s<br>
+<br>
+Avec une taille de 1024 on obtient:<br>
+real    0m0.001s<br>
+user    0m0.001s<br>
+sys     0m0.000s<br>
+<br>
+Avec une taille de 1 on obtient:<br>
+real    0m0.003s<br>
+user    0m0.002s<br>
+sys     0m0.001s<br>
+<br>
+Les résultats sont donc cohérents avec ceux du TD.</p>
 
