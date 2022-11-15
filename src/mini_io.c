@@ -1,4 +1,4 @@
-include <fcntl.h>
+#include <fcntl.h>
 #include "mini_lib.h"
 #include <unistd.h>
 
@@ -147,20 +147,23 @@ int mini_fread(void* buffer, int size_element, int number_element, MYFILE* file)
 
 }
 
-int mini_freadline(void* buffer,int size_element, MYFILE* file){
+int mini_freadline(char* buffer, MYFILE* file){
 
     /*
-    Cette fonction lit une ligne à partir de la position du curseur dans le fichier file
+    Cette fonction lit une ligne à partir de la position du curseur dans le fichier file.
+    Le fichier file doit contenir des chaines de caractère.
+    Pour cela elle lit byte par byte le fichier jusqu'à tomber sur un \n ou un \0
+    La fonction renvoie le nombre de bytes écrits.
     */
     if(file->ind_read ==-1){
         //1ere lecture dans le fichier file
-        if((file->buffer_read=mini_calloc(size_element,IOBUFFER_SIZE))==(void*)-1){
+        if((file->buffer_read=mini_calloc(sizeof(char),IOBUFFER_SIZE))==(void*)-1){
             mini_perror("Erreur allocation mémoire du buffer read");
             return -1;
         }
         file->ind_read=0;
         
-        if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element)==-1){
+        if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*sizeof(char))==-1){
             mini_perror("Erreur de lecture du fichier");
             return -1;
         }    
@@ -171,9 +174,9 @@ int mini_freadline(void* buffer,int size_element, MYFILE* file){
     char* char_buffer=(char*)buffer;
 
         while(char_buffer_read[file->ind_read]!='\n'&& char_buffer_read[file->ind_read]!='\0'){
-            if(file->ind_read==IOBUFFER_SIZE*size_element){
+            if(file->ind_read==IOBUFFER_SIZE*sizeof(char)){
                 //On est arrivé à la fin du buffer read, on le recharge avec un read
-                if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*size_element)==-1){
+                if(read(file->fd,file->buffer_read,IOBUFFER_SIZE*sizeof(char))==-1){
                     mini_perror("Erreur de lecture du fichier");
                     return -1;
                 }
@@ -181,8 +184,8 @@ int mini_freadline(void* buffer,int size_element, MYFILE* file){
             }
 
             char_buffer[i]=char_buffer_read[file->ind_read];
-            file->ind_read++;
-            i++;
+            file->ind_read+=sizeof(char);
+            i+=sizeof(char);
         }
         if(char_buffer_read[file->ind_read]=='\n'){
             //On est arrivé à la fin d'une ligne, on ne copie pas le '\n',on le saute
@@ -229,7 +232,7 @@ int mini_fwrite(void* buffer, int size_element, int number_element, MYFILE* file
 int mini_fflush(MYFILE* file){
     /*
     Force l'écriture des données non écrites présentes dans buffer_write
-    Renvoie -1 en cas d'erreur ou le nombre de caractères écrits
+    Renvoie -1 en cas d'erreur ou le nombre de bytes écrits
     */
     int char_number=0;
     if(file->ind_write!=0 && file->ind_write!=-1){
@@ -301,10 +304,10 @@ int mini_countlines(char* file){
     MYFILE* my_file=mini_fopen(file,'r');
 
     if(my_file!=(void*)-1 && buffer!=(void*)-1){
-        count_caracters=mini_freadline(buffer,sizeof(char),my_file);
+        count_caracters=mini_freadline(buffer,my_file);
         while(count_caracters!=-1 && count_caracters!=0){
             count_lines++;
-            count_caracters=mini_freadline(buffer,sizeof(char),my_file);
+            count_caracters=mini_freadline(buffer,my_file);
         }
         mini_free(buffer);
         mini_fclose(my_file);
@@ -315,7 +318,7 @@ int mini_countlines(char* file){
 
 char mini_fgetc(MYFILE* file){
     /*
-    Renvoie un caractère lu, -1 en cas d'erreur
+    Renvoie un caractère lu dans un fichier contenant des chaines de caractère, -1 en cas d'erreur
     */
     char tempo_buffer[1+1];
     if(tempo_buffer!=(void*)-1){
@@ -331,7 +334,8 @@ char mini_fgetc(MYFILE* file){
 
 int mini_fputc(MYFILE* file, char c){
     /*
-    Ecrit un caractère -1 en cas d'erreur
+    Ecrit un caractère dans un fichier 
+    renvoie -1 en cas d'erreur
     */
     char tempo_buffer[2];
     if(tempo_buffer!=(void*)-1){
