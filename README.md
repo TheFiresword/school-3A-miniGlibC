@@ -1,3 +1,4 @@
+![shell](https://user-images.githubusercontent.com/109469684/202615973-7cb56adf-9892-4efe-b71d-2541a7754faf.png)
 # miniGlibC
 <h3>Projet 3A STI INSA CVL 11/2022</h3>
 
